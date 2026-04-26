@@ -8,6 +8,7 @@ import { FaHeadset } from "react-icons/fa";
 import { FiPower } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import sawir from '../../Assets/sawir.avif'
+import { NavLink } from 'react-router';
 
 
 const Menue = () => {
@@ -32,7 +33,7 @@ const Menue = () => {
 
 
             {/* Home */}
-            {/* <NavLink to='./'> */}
+            <NavLink to='./' className={({ isActive }) => isActive ? 'bg-gray-200 text-gray-900 font-bold text-6xl rounded-md' : ''}>
                 <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
                     <div className='flex w-full h-full justify-start items-center gap-6'>
                         <li><MdHome /></li>
@@ -40,8 +41,9 @@ const Menue = () => {
                     </div>
                     <li><MdMenu /></li>
                 </ul>
-            {/* </NavLink> */}
+            </NavLink>
             {/* Data table */}
+
 
             <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
                 <div className='flex w-full h-full justify-start items-center gap-6'>
@@ -55,24 +57,28 @@ const Menue = () => {
             {/* Products */}
 
 
-            <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
-                <div className='flex w-full h-full justify-start items-center gap-6'>
-                    <li><FaBox /></li>
-                    <li>Products</li>
-                </div>
-                <li><MdMenu /></li>
-            </ul>
+            <NavLink to={'./products'} className={({ isActive }) => isActive ? 'bg-gray-200 text-gray-900 font-bold text-6xl rounded-md' : ''}>
+                <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
+                    <div className='flex w-full h-full justify-start items-center gap-6'>
+                        <li><FaBox /></li>
+                        <li>Products</li>
+                    </div>
+                    <li><MdMenu /></li>
+                </ul>
+            </NavLink>
 
             {/* Person Detail  */}
 
-            <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
-                <div className='flex w-full h-full justify-start items-center gap-6'>
-                    <li><FaUserCircle /></li>
-                    <li>Patient Detail</li>
-                </div>
-                <li><MdMenu /></li>
-            </ul>
 
+            <NavLink to={'patientDetails'}  className={({ isActive }) => isActive ? 'bg-gray-200 text-gray-900 font-bold text-6xl rounded-md' : ''}>
+                <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
+                    <div className='flex w-full h-full justify-start items-center gap-6'>
+                        <li><FaUserCircle /></li>
+                        <li>Patient Detail</li>
+                    </div>
+                    <li><MdMenu /></li>
+                </ul>
+            </NavLink>
             {/* about */}
 
 

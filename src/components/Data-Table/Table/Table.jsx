@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
-import GetAllNames from '../../API/getAllNames'
 import TableRow from './TableRow';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
+import { GetPatientInfo } from '../../../API/PatientInfo';
+import { ClipLoader } from 'react-spinners';
 
 const Table = () => {
 
 
     const {data,isLoading, isError } = useQuery({
-        queryKey : ['names'],
-        queryFn : GetAllNames
+        queryKey : ['PatientInfo'],
+        queryFn : GetPatientInfo
     })
 
     console.log(data);

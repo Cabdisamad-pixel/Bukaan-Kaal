@@ -2,11 +2,16 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppLayout from "./UI/AppLayout"
-import GetAllNames from "./components/API/getAllNames"
 import { useEffect } from "react"
 import { createBrowserRouter, RouterProvider } from "react-router"
 import DataTable from "./components/Data-Table/DataTable"
 import AddPatient from "./components/AddPatient/AddPatient"
+import InfoForm from "./components/AddPatient/Forms/InfoForm"
+import PatientTest from "./components/AddPatient/Forms/PatientTest"
+import MedicalRecords from "./components/AddPatient/Forms/MedicalRecords"
+import LoadingSpinner from "./UI/LoadingSpinner"
+import Products from "./components/Products/Products"
+import PatientDetails from "./components/PatientDetails/PatientDetails"
 
 const Router = createBrowserRouter([
   {
@@ -19,8 +24,29 @@ const Router = createBrowserRouter([
       },
       {
         element: <AddPatient/>,
-        path:"/AddPatient"
-
+        path:"/AddPatient",
+        children: [
+          {
+            element:<InfoForm/>,
+            path:"infoForm"
+          },
+          {
+            element: <PatientTest/>,
+            path:"PatientTest"
+          },
+          {
+            element: <MedicalRecords/>,
+            path:"MedicalRecords"
+          }
+        ]
+      },
+      {
+        element: <Products/>,
+        path : 'products'
+      },
+      {
+        element:<PatientDetails/>,
+        path:'patientDetails'
       }
     ]
   }
@@ -30,9 +56,9 @@ const App = () => {
 
 
   const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 0
+    defaultOptions:{
+      queries:{
+        staleTime: 1000
       }
     }
   })
@@ -61,9 +87,11 @@ const App = () => {
 
 
   return (
-    <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+      
       <RouterProvider router={Router}/>
-    </QueryClientProvider>
+     </QueryClientProvider>
+    // <LoadingSpinner/>
     
   )
 }

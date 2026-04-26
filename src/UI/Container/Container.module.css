@@ -1,0 +1,16 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 150px) 185px;
+    grid-template-rows: repeat(6, 60px);
+    grid-template-areas:
+        "yellow yellow yellow green gray gray"
+        "yellow yellow yellow green  gray gray"
+        "yellow yellow yellow green  gray gray"
+        "blue blue skyblue skyblue gray  gray"
+        "blue blue skyblue skyblue gray  gray"
+        "blue blue skyblue skyblue gray  gray"
+    ;
+    gap: 10px;
+    padding: 1rem;
+    overflow: hidden;
+}
