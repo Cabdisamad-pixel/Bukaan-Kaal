@@ -2,108 +2,101 @@ import React from 'react'
 
 import { FiPhone } from "react-icons/fi";
 
+import { FiSearch } from "react-icons/fi";
+import LoadingSpinner from '../../UI/LoadingSpinner';
+import { NavLink, Outlet } from 'react-router';
+import SumarryProfile from './SumarryProfile';
+import { useQuery } from '@tanstack/react-query';
+import { GetPatientInfo } from '../../API/PatientInfo';
 
 
-const SumarryPatientDetail = ({ name, address, phone, doctor, status }) => {
+const SumarryPatientDetail = () => {
 
 
 
-    const conditions = [
-        {
-            id: 1,
-            name: 'Diabetes',
-            status: 'Active',
-        },
-        {
-            id: 2,
-            name: 'Hypertension',
-            status: 'Active',
-        },
-        {
-            id: 3,
-            name: 'Asthma',
-            status: 'Active',
-        }, {
-            id: 4,
-            name: 'Allergy',
-            status: 'Active',
-        }
-    ]
+    
 
-    const getInitials = (name) => {
-        const apprName = name.split(' ').slice(0,2).map(word => word[0].toUpperCase());
-        return apprName;
-            // .split(" ")        // kala jar magacyada
-            // .slice(0, 2)       // qaado laba magac
-            // .map(word => word[0].toUpperCase()) // xarafka hore ka qaado
-            // .join("");         // isku dar
-    };
+    const { data: patientsInfo, isLoading : PatientsInfoIsloading } = useQuery({
+        queryKey: ['patients'],
+        queryFn:GetPatientInfo
+    })
+    
 
-    console.log(getInitials("cabdisamad mohamed")); // CM
+    console.log(patientsInfo);
+    
+    const shortList = patientsInfo?.slice(0, 3) || [];
 
+
+        // const patients = [
+        //     {
+        //         id: 1,
+        //         name: 'Cabdisamad Maxamed',
+        //         address: 'Mogadishu',
+        //         phone: '123456789',
+        //         doctor: 'Dr. Ahmed',
+        //         status: 'safe'
+        //     },
+        //     {
+        //         id: 2,
+        //         name: 'Ali Mohamed',
+        //         address: 'Hargeisa',
+        //         phone: '987654321',
+        //         doctor: 'Dr. Fatima',
+        //         status: 'safe'
+        //     },
+        //     {
+        //         id: 3,
+        //         name: 'Fatima Ahmed',
+        //         address: 'Berbera',
+        //         phone: '555555555',
+        //         doctor: 'Dr. Hassan',
+        //         status: 'danger'
+        //     }
+        // ]
+
+        // if(PatientsInfoIsloading){
+        //     return <LoadingSpinner />
+        // }
 
     return (
         <>
-            {/* the summary patient detail container */}
-            <div className='w-[20rem] h-[24rem] bg-gray-50 border border-gray-200 rounded-2xl                       flex flex-col  gap-3 p-3 cursor-pointer hover:shadow-lg transition'>
-                {/* icon name */}
+            {PatientsInfoIsloading && <LoadingSpinner />}
+            <div className='w-full p-6 flex flex-col gap-8 bg-gray-100 h-full'>
 
-                <div className='flex gap-3'>
-                    <div className='w-[3.4rem] h-[3rem] rounded-[50%] bg-blue-100 flex items-center justify-center text-xl font-bold text-blue-700'>
-                        {getInitials(name)}
+                {/* header of this page / patient details */}
+
+                <div className='w-full  flex justify-between items-start'>
+                    <div className='flex justify-start  gap-3 flex-col'>
+                        <h1 className='text-gray-400 text-4xl font-medium'>Patient</h1>
+                        <span className='text-gray-700 text-xl '>Manage and monitor all patients info </span>
                     </div>
-
-                    {/* name & Address */}
-                    <div className='w-[9rem] h-auto flex flex-col items-start'>
-                        <h2>{name}</h2>
-                        <span>{address}</span>
-                    </div>
-                    {/* status */}
-                    <span className={`w-20 h-8 rounded-md p-1 flex justify-center items-center ${
-                        status === 'safe' ? 'bg-green-200 border border-green-300' : 'bg-red-200 border border-red-300'
-                    }`}>
-                        {status}
-                    </span>
+                    <button className='w-40 bg-gray-900 text-gray-100 hover:bg-gray-800 h-11 rounded-md'> <span className='font-mono text-2xl'>+</span> Add Patient</button>
                 </div>
 
-                {/* grade ka uu maraayo bukaanka */}
 
-                <div className='font-mono  mt-4 text-xl'>
-                    grade A +
+                {/* Search feild */}
+
+                <div className='w-full bg-gray-200  rounded-md h-14 flex items-center gap-3 px-3 border border-gray-300'>
+                    <FiSearch />
+                    <input className='w-full h-full bg-gray-200 outline-none border-none border ' type='search' placeholder='search by id or by name ' />
                 </div>
 
-                {/* tell Address */}
 
-                <div className='text-sm text-gray-600 flex items-center gap-2 mt-2'>
+                {/* Summary Patient Detail */}
+                {/* the summary patient detail container */}
+                <div className='flex w-full h-full gap-3'>
+                    {shortList.map((patient, key) => {
+                        return (
 
-                    <FiPhone size={20} />
-                    <p>Tell: {phone}</p>
-                </div>
-
-                {/* Doctor of this patient */}
-                <div className='text-sm text-gray-600 flex items-center gap-2 mt-2'>
-
-                    <p>Doctor : {doctor}</p>
-                </div>
-
-                <hr />
-
-                {/* active conditions */}
-
-                <div>
-                    <span>Active Conditions</span>
-                    {/* container of conditions */}
-                    <div className='flex gap-2 mt-2 flex-wrap'>
-                        {conditions.map((condition) => {
-                            return <div className='p-[4px] rounded-md bg-gray-200 border border-gray-300'>
-                                <span>{condition.name}</span>
-                            </div>
-
-                        })}
-                    </div>
+                            <NavLink key={patient.id} to={`${patient.id}/overview`}>
+                                <SumarryProfile id={key} patient={patient}/>
+                            </NavLink>
+                        )
+                    })}
                 </div>
 
             </div>
+
         </>
     )
 

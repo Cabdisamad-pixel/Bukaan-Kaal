@@ -70,7 +70,7 @@ const Menue = () => {
             {/* Person Detail  */}
 
 
-            <NavLink to={'patientDetails'}  className={({ isActive }) => isActive ? 'bg-gray-200 text-gray-900 font-bold text-6xl rounded-md' : ''}>
+            <NavLink to={'patientDetails/patients'}  className={({ isActive }) => isActive ? 'bg-gray-200 text-gray-900 font-bold text-6xl rounded-md' : ''}>
                 <ul className='flex   w-full h-12 p-6  justify-around items-center text-sm  text-gray-600'>
                     <div className='flex w-full h-full justify-start items-center gap-6'>
                         <li><FaUserCircle /></li>

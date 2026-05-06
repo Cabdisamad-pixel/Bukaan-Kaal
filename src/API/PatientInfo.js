@@ -14,6 +14,19 @@ export const GetPatientInfo = async () => {
     return PatientInfo;
 }
 
+// get Onr patient info by id
+export const GetOnePatientInfo = async (id) => {
+    let { data, error } = await supabase
+        .from('PatientInfo')
+        .select('*')
+        .eq('id', id)
+
+    if (error) {
+        throw new Error('Patient info could not be fetched')
+    }
+    return data;
+}
+
 export const insertPatientInfo = async (PatientInfo) => {
 
     const { data, error } = await supabase
@@ -24,6 +37,6 @@ export const insertPatientInfo = async (PatientInfo) => {
 
     if (error) {
         throw new Error('Patient info could not be inserted')
-                
+
     }
 }

@@ -46,11 +46,7 @@ const AddPatient = () => {
 
   if(bar >= 4) {
     console.log(infoPatient);
-    console.log(infoPatient[0]);
-
-    // const data = [infoPatient[0]]
-    
-    // mutate(patientInfo[0]);
+    // console.log(infoPatient[0]);
   }
 
 
@@ -77,7 +73,7 @@ const AddPatient = () => {
     <div className='w-full h-full m-0 p-2 flex justify-start relative'>
       <FormBar bar={bar} />
 
-      <div className='bg-gray-200 text-gray-500 basis-full rounded-md p-2 flex justify-between relative items-start flex-col'>
+      <div className='bg-white border border-gray-300 text-gray-500 basis-full rounded-md p-2 flex justify-between relative items-start flex-col'>
         <Outlet context={{bar, setBar, infoPatient, setInfoPatient}} />
         {/* <button type='submit' className='absolute right-2 bottom-3 w-36 h-9 rounded-md text-white text-base bg-blue-400 border-2 border-blue-300' onClick={(e) => {
           e.preventDefault();

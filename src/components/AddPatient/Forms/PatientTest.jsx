@@ -26,19 +26,19 @@ const PatientTest = () => {
 
         <div className='flex w-full h-12 justify-start items-center p-6 gap-6 '>
 
-          {/* FirstName */}
-          <div className='flex justify-start items-center p-2 gap-2'>
+          {/* PatientID */}
+          <div className='flex flex-col justify-start items-start p-2 gap-2'>
             <Label text={'Patient Id'} />
-            <Input type={'text'} Width={'18rem'} placeHolder={'Enter patient Id'} register={register('patientId')} />
+            <Input type={'text'} Width={'25rem'} placeHolder={'Enter patient Id'} register={register('patientId')} />
 
           </div>
 
 
-          {/* LastName */}
+          {/* TestId */}
 
-          <div className='flex justify-start items-center p-2 gap-2 '>
+          <div className='flex flex-col justify-start items-start p-2 gap-2 '>
             <Label text={'Test Id'} />
-            <Input type={'text'} Width={'18rem'} placeHolder={'Enter test Id'} register={register('testId')} />
+            <Input type={'text'} Width={'25rem'} placeHolder={'Enter test Id'} register={register('testId')} />
           </div>
         </div>
 
