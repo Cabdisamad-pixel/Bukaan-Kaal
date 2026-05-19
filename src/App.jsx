@@ -19,6 +19,7 @@ import SumarryWeeks from "./components/PatientDetails/PatientInfo/Medication/Sum
 import WeekMedications from "./components/PatientDetails/PatientInfo/Medication/WeekMedications"
 import { selectALlMedicalRecords } from "./API/medicalRecords"
 import { Toaster } from "react-hot-toast"
+import { useState } from "react"
 
 const Router = createBrowserRouter([
   {
@@ -104,6 +105,23 @@ const Router = createBrowserRouter([
 const App = () => {
 
 
+
+  let name = 'cabdisamad '
+  console.log(name);
+
+  name = 'maxamed'
+
+  console.log(name);
+  
+  
+
+  // const [count, setCount] = useState(true)
+
+
+  // 1) count accessing 
+
+  // console.log(count);
+  
 
 
 

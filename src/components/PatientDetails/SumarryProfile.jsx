@@ -1,5 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react'
 import { FiPhone } from 'react-icons/fi';
+import { selectALlMedicalRecords } from '../../API/medicalRecords';
 
 const SumarryProfile = ({patient}) => {
 
@@ -14,8 +16,28 @@ const SumarryProfile = ({patient}) => {
         // .join("");         // isku dar
     };
 
-    console.log(getInitials("cabdisamad mohamed")); // CM
+    // console.log(getInitials("cabdisamad mohamed")); // CM
 
+
+    // 1) Reading all MedicalRecords 
+
+    const {data : medicalRecords, isLoading : medicalRecordsIsLoading } = useQuery({
+        queryKey:'medicalRecords',
+        queryFn:selectALlMedicalRecords
+    })
+
+
+    // console.log(medicalRecords);
+
+
+
+    // 2) status of this patient reading id from the patients table foreign to the medical Records table 
+
+    const statusOfThisPatient =  medicalRecords?.find((patientMedicalRecord) => patientMedicalRecord.PatientId === patient.id)
+    
+
+    // console.log(statusOfThisPatient);
+    
 
     const conditions = [
         {
@@ -55,9 +77,9 @@ const SumarryProfile = ({patient}) => {
                         <span>{patient.Address}</span>
                     </div>
                     {/* status */}
-                    <span className={`w-20 h-8 rounded-md p-1 flex justify-center items-center ${'safe' === 'safe' ? 'bg-green-200 border border-green-300' : 'bg-red-200 border border-red-300'
+                    <span className={`w-20 h-8 rounded-md p-1 flex justify-center items-center ${ statusOfThisPatient?.patientStatus === 'stable' ? 'bg-green-200 border border-green-300' : 'bg-red-200 border border-red-300'
                         }`}>
-                        safe
+                        {statusOfThisPatient?.patientStatus}
                     </span>
                 </div>
 

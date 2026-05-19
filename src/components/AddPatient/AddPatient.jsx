@@ -8,7 +8,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { GetPatientInfo, insertPatientInfo } from '../../API/PatientInfo';
 
 const AddPatient = () => {
+
+  
   const [bar, setBar] = useState(1);
+
+
   const navigate = useNavigate();
 
 
