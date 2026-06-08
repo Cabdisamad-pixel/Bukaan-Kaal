@@ -169,7 +169,7 @@ return (
         duration:3000,
         iconTheme: {
         primary: 'green',
-        secondary: 'black',
+        secondary: 'white',
       },
       },
       error:{
