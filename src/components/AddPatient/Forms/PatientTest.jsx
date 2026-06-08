@@ -1,21 +1,27 @@
 import React from 'react'
 import Input from '../../../UI/Input'
 import Label from '../../../UI/Label'
-import { useOutletContext } from 'react-router'
+import { useNavigate, useOutletContext } from 'react-router'
 import { useForm } from 'react-hook-form'
 
 const PatientTest = () => {
+
+  const navigate = useNavigate();
 
 
   const { register, handleSubmit } = useForm()
 
 
-  const { bar, setBar, infoPatient, setInfoPatient } = useOutletContext()
+
+
+
+  // const { bar, setBar, infoPatient, setInfoPatient } = useOutletContext()
 
   const onsubmit = (data) => {
     // e.preventDefault();
     // console.log(data);
-    setInfoPatient(prev => [...prev, data]);
+    // setInfoPatient(prev => [...prev, data]);
+    navigate("/AddPatient/MedicalRecords");
   }
 
   return (
@@ -47,12 +53,7 @@ const PatientTest = () => {
           <textarea {...register('testResult')} placeholder='Enter test result' className='w-full h-32 bg-transparent text-gray-800  border-gray-500 rounded border outline-none text-base p-3 font-mono h-80 resize-none ' type={'text'} />
         </div>
 
-        <button type='submit' className='absolute right-2 bottom-3 w-36 h-9 rounded-md text-white text-base bg-blue-400 border-2 border-blue-300' onClick={(e) => {
-          // e.preventDefault();
-          setBar(bar => bar + 1);
-          // console.log(data);
-
-        }}>Confirm</button>
+        <button type='submit' className='absolute right-2 bottom-3 w-36 h-9 rounded-md text-white text-base bg-blue-400 border-2 border-blue-300'>Confirm</button>
       </form>
     </div>
 

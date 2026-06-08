@@ -1,3 +1,4 @@
+import { useState } from "react";
 import supabase from "./supabase"
 
 
@@ -15,15 +16,18 @@ export const GetPatientInfo = async () => {
 }
 
 // get Onr patient info by id
-export const GetOnePatientInfo = async (id) => {
+export const GetEmailIsExist= async (email) => {
     let { data, error } = await supabase
         .from('PatientInfo')
         .select('*')
-        .eq('id', id)
+        .eq('email', email)
+
 
     if (error) {
         throw new Error('Patient info could not be fetched')
     }
+    console.log(data);
+    
     return data;
 }
 
@@ -40,3 +44,6 @@ export const insertPatientInfo = async (PatientInfo) => {
 
     }
 }
+
+
+

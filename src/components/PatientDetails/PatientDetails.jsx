@@ -8,11 +8,11 @@ const PatientDetails = () => {
 
  
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate("patients");
-  }, [])
+  // useEffect(() => {
+  //   navigate("patients");
+  // }, [])
 
   return (
     <>

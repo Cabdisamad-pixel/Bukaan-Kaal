@@ -9,7 +9,7 @@ import { FiMapPin } from "react-icons/fi";
 import { MdEmergency } from "react-icons/md";
 import { FiShield } from "react-icons/fi";
 import { useQuery } from '@tanstack/react-query';
-import { GetOnePatientInfo, GetPatientInfo } from '../../../API/PatientInfo';
+import { GetPatientInfo } from '../../../API/PatientInfo';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 import { useParams } from 'react-router';
 

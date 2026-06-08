@@ -10,10 +10,6 @@ const SumarryProfile = ({patient}) => {
     const getInitials = (name) => {
         const apprName = name.split(' ').slice(0, 2).map(word => word[0].toUpperCase());
         return apprName;
-        // .split(" ")        // kala jar magacyada
-        // .slice(0, 2)       // qaado laba magac
-        // .map(word => word[0].toUpperCase()) // xarafka hore ka qaado
-        // .join("");         // isku dar
     };
 
     // console.log(getInitials("cabdisamad mohamed")); // CM

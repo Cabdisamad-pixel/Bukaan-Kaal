@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
-
-import { FiPhone } from "react-icons/fi";
-
 import { FiSearch } from "react-icons/fi";
 import LoadingSpinner from '../../UI/LoadingSpinner';
-import { NavLink, Outlet, useSearchParams } from 'react-router';
+import { NavLink, useSearchParams } from 'react-router';
 import SumarryProfile from './SumarryProfile';
 import { useQuery } from '@tanstack/react-query';
 import { GetPatientInfo } from '../../API/PatientInfo';
@@ -101,7 +98,7 @@ const SumarryPatientDetail = () => {
 
     }
 
-    const searchingPatients = searchedPatient ? filterdPatients?.filter(patient => patient.firstName.includes(searchedPatient) || patient.listName.includes(searchedPatient)) : filterdPatients
+    const searchingPatients = searchedPatient ? filterdPatients?.filter(patient => patient.firstName.includes(searchedPatient) ) : filterdPatients
 
 
 

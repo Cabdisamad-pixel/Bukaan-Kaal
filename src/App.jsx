@@ -57,14 +57,16 @@ const Router = createBrowserRouter([
         path: 'patientDetails',
         children: [
           {
-            path: 'patients',
+            index: true,
+            path: '',
             element: <SumarryPatientDetail />
           },
           {
-            path: 'patients/:id',
+            path: ':id',
             element: <PatientInfo />,
             children: [
               {
+                index : true,
                 path: '',
                 element: <OverView />
               },
@@ -76,10 +78,6 @@ const Router = createBrowserRouter([
                 path: 'medications',
                 element: <Medications />,
                 children: [
-                  // {
-                  //   path:'',
-                  //   element:<SumarryWeeks/>
-                  // },
                   {
                     path: 'weeks',
                     element: <SumarryWeeks />
@@ -93,6 +91,9 @@ const Router = createBrowserRouter([
               {
                 path: 'history',
                 element: <History />
+              },{
+                path: 'lab-results',
+                element: <div>lab results</div>
               }
             ]
           }

@@ -1,14 +1,23 @@
 import { Query, useQuery } from '@tanstack/react-query';
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { GetWeeks } from '../../../../API/medicalRecords';
 import LoadingSpinner from '../../../../UI/LoadingSpinner';
+import NotFoundMedications from './NotFoundMedications';
+import AddWeeksPortal from './AddWeeksPortal';
 
 
 
 
 const SumarryWeeks = () => {
 
+
+    const [showAddWeeks, setShowAddWeeks] = useState(false);
+
+
+    const handleAddWeeks = () => {
+        setShowAddWeeks(prev => !prev);
+    }
 
     const navigate = useNavigate();
 
@@ -44,9 +53,9 @@ const SumarryWeeks = () => {
     const { id } = useParams();
 
 
-    const { data: weeks, isLoading : weeksLoading } = useQuery({
-        queryKey: ['weeks'],
-        queryFn: GetWeeks
+    const { data: weeks, isLoading: weeksLoading } = useQuery({
+        queryKey: ['weeks', id],
+        queryFn: () => GetWeeks(id)
     })
 
     console.log(weeks);
@@ -54,11 +63,11 @@ const SumarryWeeks = () => {
 
     //  filitiring array of and returned week only if weeks.patientId === id tha comes prams in side the router where using usePrmas
 
-    const filteredWeeks = weeks?.filter((week) => week.patientId == parseInt(id));
+    // const filteredWeeks = weeks?.filter((week) => week.patientId == parseInt(id));
 
     // sorted the filtered Array by asending ( number )
 
-    const sortedWeeks = filteredWeeks?.sort((a, b) => a.weekNumber - b.weekNumber);
+    const sortedWeeks = weeks?.sort((a, b) => a.weekNumber - b.weekNumber);
 
 
 
@@ -73,21 +82,31 @@ const SumarryWeeks = () => {
         {/* if isLoading is true display and loadingSpinner */}
 
         {
-            weeksLoading && <LoadingSpinner/>
+            weeksLoading && <LoadingSpinner />
         }
 
         {/* Parent div / container */}
 
 
         < div className='w-full min-h-[100%] flex flex-col justify-start items-start gap-6' >
+
             {
-                sortedWeeks?.map((week, idx) => {
-                    return <button disabled={week.status === 'not taken'} onClick={() => navigate(`${week.id}`)} key={idx} className={` w-full flex justify-between p-4 border-2 ${week.status === 'taken' ? 'bg-green-200 border-green-300 rounded-lg text-green-900 cursor-pointer' : week.status === 'pending' ? 'bg-yellow-200 border-yellow-300 rounded-lg text-yellow-900 cursor-pointer' : 'bg-gray-200 border-gray-300 text-gray-400 cursor-not-allowed rounded-lg'}`}>
-                        <h3>week{week.weekNumber}</h3>
-                        <p>{week.status} </p>
-                    </button>
-                })
+                sortedWeeks?.length === 0 ? showAddWeeks ? <AddWeeksPortal ChangeHandler={handleAddWeeks} /> : <NotFoundMedications AddWeekHandler={handleAddWeeks} /> :
+                    sortedWeeks?.map((week, idx) => {
+                        return(
+                            <button disabled={week.status === 'not taken'} onClick={() => navigate(`${week.weekNumber}`)} key={idx} className={` w-full flex justify-between p-4 border-2 ${week.status === 'taken' ? 'bg-green-200 border-green-300 rounded-lg text-green-900 cursor-pointer' : week.status === 'pending' ? 'bg-yellow-200 border-yellow-300 rounded-lg text-yellow-900 cursor-pointer' : 'bg-gray-200 border-gray-300 text-gray-400 cursor-not-allowed rounded-lg'}`}>
+                                <h3>week{week.weekNumber}</h3>
+                                <p>{week.status} </p>
+                            </button>
+                        )
+                        
+                    })
             }
+            {   sortedWeeks?.length > 0 ? showAddWeeks ? <AddWeeksPortal ChangeHandler={handleAddWeeks}/> :
+                <button onClick={handleAddWeeks} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded block mt-4 w-full'>
+                Add Week
+            </button>
+            : null}
         </div >
     </>
 
