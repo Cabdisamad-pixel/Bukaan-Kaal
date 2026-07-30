@@ -9,10 +9,10 @@ import { FiEdit, FiTrash, FiTrash2 } from "react-icons/fi";
 import { useParams } from 'react-router';
 import LoadingSpinner from '../../../../UI/LoadingSpinner';
 import AddMedication from './AddMedication';
-import { GetMedications, takedWeek } from '../../../../API/Medications';
+import { GetMedications, takedWeek, UpdateMedicine } from '../../../../API/Medications';
 import { GetCurrentWeekByPatientId } from '../../../../API/medicalRecords';
 import toast from 'react-hot-toast';
-import UpdatingMedicine from './updatingMedicine';
+import UpdatingMedicine from './UpdatingMedicine'
 
 const WeekMedications = () => {
 
@@ -107,7 +107,7 @@ const WeekMedications = () => {
         }
 
         {
-          showUpdateMedicinePortal && <UpdatingMedicine OnCloseUpdateMedicinePortal={handleShowUpdateMedicine} id={medicineId}/>
+          showUpdateMedicinePortal && <UpdateMedicine OnCloseUpdateMedicinePortal={handleShowUpdateMedicine} id={medicineId}/>
         }
         {
 
