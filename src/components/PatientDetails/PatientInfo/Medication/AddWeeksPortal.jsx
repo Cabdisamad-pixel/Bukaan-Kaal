@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Label from '../../../../UI/Label'
-import Input from '../../../../UI/Input'
-import { useNavigate, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AddWeek, GetWeeks } from '../../../../API/medicalRecords'
 import toast from 'react-hot-toast'
@@ -20,8 +19,6 @@ export const BackDrop = ({ ChangeHandler }) => {
 const AddWeeksOverLay = ({ ChangeHandler }) => {
 
 
-    const navigate = useNavigate();
-
     const { id } = useParams();
     console.log(id);
     const queryClient = useQueryClient();
@@ -37,7 +34,7 @@ const AddWeeksOverLay = ({ ChangeHandler }) => {
         mutationFn: AddWeek,
         onSuccess: () => {
             toast.success('Week Added Successfully');
-            queryClient.invalidateQueries({ queryKey: ['weeks', id] })
+            queryClient.invalidateQueries({queryKey:['weeks', id]})
 
         }
     })
@@ -70,8 +67,8 @@ const AddWeeksOverLay = ({ ChangeHandler }) => {
                     <div className='flex justify-between items-center gap-8 border h-14 p-1 bg-gray-200 border-gray-300 rounded-md w-[25rem]'>
 
                         <div className='flex  basis-[30%] justify-start items-center h-full '>
-                            <input {...register('status')} type="radio" id="Taken" name="status" value="taken" className='hidden peer' />
-                            <label htmlFor="Taken" className='h-full w-full flex justify-center items-center cursor-pointer px-2 py-1 peer-checked:bg-green-500 peer-checked:rounded peer-checked:text-white'>Taken</label>
+                            <input {...register('status')} type="radio" id="Taken" name="status" value="taken" className='hidden peer' readOnly={true} disabled={true} />
+                            <label htmlFor="Taken" className='h-full w-full flex justify-center items-center cursor-not-allowed px-2 py-1 peer-checked:bg-green-500 peer-checked:rounded peer-checked:text-white'>Taken</label>
                         </div>
 
                         <div className='flex  basis-[30%] justify-start items-center h-full'>
@@ -79,16 +76,20 @@ const AddWeeksOverLay = ({ ChangeHandler }) => {
                             <label htmlFor="Pending" className='h-full w-full flex justify-center items-center cursor-pointer px-2 py-1 peer-checked:bg-blue-500 peer-checked:rounded peer-checked:text-white'>Pending</label>
                         </div>
                         <div className='flex  basis-[30%] justify-start items-center h-full'>
-                            <input {...register('status')} type="radio" id="Not Taken" name="status" value="Not Taken" className='hidden peer' />
-                            <label htmlFor="Not Taken" className='h-full w-full flex justify-center items-center cursor-pointer px-2 py-1 peer-checked:bg-white peer-checked:rounded peer-checked:text-green-500'>Not Taken</label>
+                            <input {...register('status')} type="radio" id="Not Taken" name="status" value="Not Taken" className='hidden peer' readOnly={true} disabled={true} />
+                            <label htmlFor="Not Taken" className='h-full w-full flex justify-center items-center cursor-not-allowed px-2 py-1 peer-checked:bg-white peer-checked:rounded peer-checked:text-green-500'>Not Taken</label>
                         </div>
                     </div>
                 </div>
 
                 <Label text={'Week Number'} />
                 <input {...register('weekNumber')} value={LastWeekNumber + 1} readOnly={true} className='w-[25rem] h-21 bg-transparent text-gray-800  border-gray-700 rounded-lg border outline-none text-base p-3 font-mono cursor-not-allowed' placeHolder={'Automatically Generated'} />
-                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded block mt-4 w-full'>
-                    {isInsertingWeek ? 'Adding Week...' : 'Add Week'}
+
+                <Label text={'Price'} />
+                <input {...register('price')} type='number' step='0.01' className='w-[25rem] h-21 bg-transparent text-gray-800  border-gray-700 rounded-lg border outline-none text-base p-3 font-mono mt
+                ' placeHolder={'Enter price'} />
+                <button disabled={weeksLoading} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded block mt-4 w-full'>
+                    {isInsertingWeek  ? 'Adding Week...' : weeksLoading ? 'week data Loading' : 'Add Week'}
                 </button>
             </form>
             </div>
@@ -101,8 +102,8 @@ const AddWeeksPortal = ({ ChangeHandler }) => {
 
     return (
         <div>
-            {ReactDOM.createPortal(<BackDrop ChangeHandler={ChangeHandler} />, document.getElementById('BackDrop'))}
-            {ReactDOM.createPortal(<AddWeeksOverLay ChangeHandler={ChangeHandler}/>, document.getElementById('AddWeeksPortal'))}
+            {ReactDOM.createPortal(<BackDrop ChangeHandler={ChangeHandler} />, document.getElementById('portal-root'))}
+            {ReactDOM.createPortal(<AddWeeksOverLay ChangeHandler={ChangeHandler}/>, document.getElementById('portal-root'))}
         </div>
     )
 

@@ -1,6 +1,7 @@
 // import React from 'react'
 
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import AppLayout from "./UI/AppLayout"
 import { createBrowserRouter, RouterProvider } from "react-router"
 import DataTable from "./components/Data-Table/DataTable"
@@ -17,9 +18,9 @@ import Medications from "./components/PatientDetails/PatientInfo/Medication/Medi
 import History from "./components/PatientDetails/PatientInfo/History"
 import SumarryWeeks from "./components/PatientDetails/PatientInfo/Medication/SumarryWeeks"
 import WeekMedications from "./components/PatientDetails/PatientInfo/Medication/WeekMedications"
-import { selectALlMedicalRecords } from "./API/medicalRecords"
+// import { selectALlMedicalRecords } from "./API/medicalRecords"
 import { Toaster } from "react-hot-toast"
-import { useState } from "react"
+// import { useState } from "react"
 
 const Router = createBrowserRouter([
   {
@@ -161,8 +162,9 @@ const App = () => {
 
 
 return (
-  <QueryClientProvider client={queryClient}>
 
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={false}/>
     <RouterProvider router={Router} />
     <Toaster  position="top-center" gutter={12} containerStyle={{margin:'4px'}} toastOptions={{
       success:{

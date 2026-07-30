@@ -2,18 +2,18 @@ import { useQuery } from '@tanstack/react-query'
 import TableRow from './TableRow';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 import { GetPatientInfo } from '../../../API/PatientInfo';
-import { ClipLoader } from 'react-spinners';
+// import { ClipLoader } from 'react-spinners';
 
 const Table = () => {
 
 
-    const {data,isLoading, isError } = useQuery({
-        queryKey : ['PatientInfo'],
-        queryFn : GetPatientInfo
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['PatientInfo'],
+        queryFn: GetPatientInfo
     })
 
     console.log(data);
-    
+
 
     // const tableData = [
     //     {
@@ -95,38 +95,42 @@ const Table = () => {
     // }
     console.log(data);
     console.log(isError);
-    
-    
+
+
     return (
         <div className='w-full h-auto'>
+                {isLoading && <LoadingSpinner />}
             <table className='w-full flex flex-col gap-1'>
                 {/* table head */}
 
 
-                <tr className='w-full flex justify-between  p-2 text-sm font-sm text-gray-500'>
-                    <td className='basis-1/5'>Id</td>
-                    <td className='basis-1/5'>Name</td>
-                    <td className='basis-1/5'>phone</td>
-                    <td className='basis-1/5'>Email</td>
-                    <td className='basis-1/12'>Status</td>
-                </tr>
+                <thead>
+                    <tr className='w-full flex justify-between  p-2 text-sm font-sm text-gray-500'>
+                        <td className='basis-1/5'>Id</td>
+                        <td className='basis-1/5'>Name</td>
+                        <td className='basis-1/5'>phone</td>
+                        <td className='basis-1/5'>Email</td>
+                        <td className='basis-1/12'>Status</td>
+                    </tr>
+                </thead>
 
 
 
                 {/* Loading Spinner */}
-                
-                {isLoading && <LoadingSpinner/>}
+
 
                 {/* mapping to the patientsData */}
 
 
+                <tbody className='flex flex-col gap-1'>
+                {data?.map((patient, key) => {
 
-                {data?.map((patient,key) =>{
-            
                     return (
-                        <TableRow patient={patient} key={key}/>
+
+                        <TableRow patient={patient} key={key} />
                     )
                 })}
+                </tbody>
 
             </table>
         </div>

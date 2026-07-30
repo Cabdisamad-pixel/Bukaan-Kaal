@@ -72,3 +72,12 @@ const { data, error } = await supabase
    }
 
 }
+
+
+export const GetCurrentWeekByPatientId = async (patientId,weekNumber) => {
+    let { data: weeks, error  } = await supabase
+        .from('weeks')
+        .select('*').eq('patientId', patientId).eq('weekNumber', weekNumber)
+        .single();
+    return weeks
+}

@@ -3,16 +3,19 @@ import Budget from './Budgets/Budget';
 import Table from './Table/Table';
 import { Link } from 'react-router';
 
+import { useState } from 'react';
 
 
 const DataTable = () => {
 
 
+  const [sortOption, setSortOption] = useState('');
+  const [date, setDate] = useState('');
 
-  const today = new Date();
-  const formattedDate = today.getFullYear() + '-' +
-    String(today.getMonth() + 1).padStart(2, '0') + '-' +
-    String(today.getDate()).padStart(2, '0');
+  // const today = new Date();
+  // const formattedDate = date || new Date().getFullYear() + '-' +
+  //   String(new Date().getMonth() + 1).padStart(2, '0') + '-' +
+  //   String(new Date().getDate()).padStart(2, '0');
 
   return (
     
@@ -40,8 +43,8 @@ const DataTable = () => {
         {/* sorting by A-Z or sorting by date  */}
 
         <div className='flex gap-3'>
-          <select className='border w-36 h-10 text-center rounded-md text-gray-700 text-xs cursor-pointer'>
-            <option value="" disabled selected>
+          <select value={sortOption}  onChange={(e) => setSortOption(e.target.value)} className='border w-36 h-10 text-center rounded-md text-gray-700 text-xs cursor-pointer'>
+            <option value="" disabled>
               Sort by
             </option>
             <option value="a-z">A-Z</option>
@@ -49,7 +52,7 @@ const DataTable = () => {
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
           </select>
-          <input type="date" value={formattedDate} className='border w-36 h-10 text-center rounded-md text-gray-700 text-xs cursor-pointer' />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className='border w-36 h-10 text-center rounded-md text-gray-700 text-xs cursor-pointer' />
 
         </div>
       </div>

@@ -18,7 +18,7 @@ const SumarryProfile = ({patient}) => {
     // 1) Reading all MedicalRecords 
 
     const {data : medicalRecords, isLoading : medicalRecordsIsLoading } = useQuery({
-        queryKey:'medicalRecords',
+        queryKey:['medicalRecords'],
         queryFn:selectALlMedicalRecords
     })
 

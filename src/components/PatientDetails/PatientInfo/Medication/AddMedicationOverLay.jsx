@@ -3,13 +3,13 @@ import toast from "react-hot-toast";
 
 import { FaCheck } from "react-icons/fa";
 // import { GetMedications } from "../../../../API/medicalRecords";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { GetMedications, insertMedications } from "../../../../API/Medications";
-import LoadingSpinner from "../../../../UI/LoadingSpinner";
+import {insertMedications } from "../../../../API/Medications";
+// import LoadingSpinner from "../../../../UI/LoadingSpinner";
 
 
-const AddMedicationOverLay = ({ OnClose, onConfirm }) => {
+const AddMedicationOverLay = ({ OnClose, onConfirm, existingMedications }) => {
 
   const queryClient = useQueryClient();
 
@@ -17,10 +17,10 @@ const AddMedicationOverLay = ({ OnClose, onConfirm }) => {
   const { id, weekId } = useParams();
 
   // get medications that i record for this patient from data base and show them in the overlay to select from them and add new medication to the patient
-  const { data: Medications, isLoading: MedicationsLoading } = useQuery({
-    queryKey: ['medications', id, weekId],
-    queryFn: () => GetMedications(parseInt(id), parseInt(weekId))
-  })
+  // const { data: Medications, isLoading: MedicationsLoading } = useQuery({
+  //   queryKey: ['medications', id, weekId],
+  //   queryFn: () => GetMedications(parseInt(id), parseInt(weekId))
+  // })
 
 
   // insertingData Query
@@ -49,7 +49,7 @@ const AddMedicationOverLay = ({ OnClose, onConfirm }) => {
 
   // console.log(data?.length);
 
-  const existingMedications = Medications?.length || 1;
+  // const existingMedications = Medications?.length || 1;
 
 
   // 1) Fake data for intial States & testing
@@ -198,6 +198,9 @@ const AddMedicationOverLay = ({ OnClose, onConfirm }) => {
   }
 
 
+  console.log(existingMedications)
+
+
   // handle dose change
   const handleDoseChange = (drugId, passedDose) => {
 
@@ -239,6 +242,8 @@ const AddMedicationOverLay = ({ OnClose, onConfirm }) => {
 
     const finalHandDrugs = Object.values(selectedDrugs).map((drug, index) => {
 
+      console.log(existingMedications)
+
       return {
         patientId: parseInt(id),
         medicineName: drug.name,
@@ -263,7 +268,7 @@ const AddMedicationOverLay = ({ OnClose, onConfirm }) => {
 
   }
 
-  if (MedicationsLoading) return <LoadingSpinner />
+  // if (MedicationsLoading) return <LoadingSpinner />
 
   return (
     // <div onClick={OnClose} className="fixed inset-0 z-50 flex justify-end" style={{ background: "rgba(30,35,48,0.55)" }}>

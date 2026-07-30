@@ -30,7 +30,7 @@ const Budget = () => {
     return (
         <div className='flex p-5 w-full gap-8'>
             {budgets.map((budget) => {
-                return <div style={{backgroundColor : budget.color}} className='border w-56 h-28 flex flex-col p-3 gap-2 rounded-md bg-gray-200'>
+                return <div key={budget.name} style={{backgroundColor : budget.color}} className='border w-56 h-28 flex flex-col p-3 gap-2 rounded-md bg-gray-200'>
                     <div className='flex gap-4 justify-start items-center capitalize'>
                         <span className='text-gr'>{budget.name}</span>
                         <MdKeyboardArrowDown className='font-bold text-red-600 text-3xl' />
