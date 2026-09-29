@@ -20,6 +20,7 @@ import SumarryWeeks from "./components/PatientDetails/PatientInfo/Medication/Sum
 import WeekMedications from "./components/PatientDetails/PatientInfo/Medication/WeekMedications"
 // import { selectALlMedicalRecords } from "./API/medicalRecords"
 import { Toaster } from "react-hot-toast"
+import PatientsTable from "./components/PatientTable/PatientsTable"
 // import { useState } from "react"
 
 const Router = createBrowserRouter([
@@ -52,6 +53,10 @@ const Router = createBrowserRouter([
       {
         element: <Products />,
         path: '/products'
+      },
+      {
+        element : <PatientsTable/>,
+        path : 'patientsTable'
       },
       {
         element: <PatientDetails />,
@@ -164,7 +169,7 @@ const App = () => {
 return (
 
   <QueryClientProvider client={queryClient}>
-    <ReactQueryDevtools initialIsOpen={false}/>
+    {/* <ReactQueryDevtools initialIsOpen={false}/> */}
     <RouterProvider router={Router} />
     <Toaster  position="top-center" gutter={12} containerStyle={{margin:'4px'}} toastOptions={{
       success:{

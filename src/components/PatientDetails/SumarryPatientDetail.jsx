@@ -15,12 +15,29 @@ const SumarryPatientDetail = () => {
     const [searchPrams] = useSearchParams();
 
 
-    // 1) Reading/selecting all patients
+    // 1) Reading/selecting all patients relating filtering the backend for the field status throw passing an object has the key of status and the value of the filter value that we get from the url search params
+
+
+    let filter;
+
+    if (!searchPrams.get('status') || searchPrams.get('status') === 'all') {
+        filter = null
+    }
+    else filter = {
+        method : 'eq',
+        filterField: 'patientStatus',
+        filterValue:  searchPrams.get('status')
+    }
+
+    console.log(filter)
 
     const { data: patientsInfo, isLoading: PatientsInfoIsloading } = useQuery({
-        queryKey: ['patients'],
-        queryFn: GetPatientInfo
+        queryKey: ['patients', filter],
+        queryFn: () => GetPatientInfo(filter)
     })
+
+    console.log(patientsInfo);
+    
 
 
     // 2) Reading all MedicalRecords 
@@ -32,7 +49,7 @@ const SumarryPatientDetail = () => {
         queryFn: selectALlMedicalRecords
     })
 
-    
+
 
     const [searchedPatient, setSearchedPAtient] = useState('');
 
@@ -48,7 +65,7 @@ const SumarryPatientDetail = () => {
 
 
 
-    const filterValue = searchPrams.get('filter') || 'all';
+    // const filterValue = searchPrams.get('status') || 'all';
 
     // console.log(filterValue);
 
@@ -60,45 +77,45 @@ const SumarryPatientDetail = () => {
 
 
     // 5) Declaring the array name / hadey jiraan filter gooni ah array-da filterkaas aa la siinaa hadeysan jirin original array 
-    let filterdPatients;
+    // let filterdPatients;
 
-    if (filterValue === 'all') filterdPatients = patientsInfo // Original Array from supabase 
+    // if (filterValue === 'all') filterdPatients = patientsInfo // Original Array from supabase 
 
 
     // 6) this case is for if we get filter value not filter=all but if we get filter value that not 'all' we make this decisions
 
-    else {
-        filterdPatients = patientsInfo?.filter((patient) => {
+    // else {
+    //     filterdPatients = patientsInfo?.filter((patient) => {
 
-            // console.log(patient.id); // checking if we get an id 
+    // console.log(patient.id); // checking if we get an id 
 
 
-            // 7) waxa isku dayeynaa inaa isku match gareyno patien-ka hada la maraayo anagoo heleyno id-giisa 
-            // inaa ka helno array-da records waana laga helaa marka waxaa si hubineynaa in markii la soo helo id-ga 
-            // inuu match gareynaayo filterValue ga hadii uu match gareeyo ayaa lagu return gareynaa 
+    // 7) waxa isku dayeynaa inaa isku match gareyno patien-ka hada la maraayo anagoo heleyno id-giisa 
+    // inaa ka helno array-da records waana laga helaa marka waxaa si hubineynaa in markii la soo helo id-ga 
+    // inuu match gareynaayo filterValue ga hadii uu match gareeyo ayaa lagu return gareynaa 
 
-            const foundedPatient = medicalRecords?.find((record) => {
-                return (
-                    record.PatientId === patient.id && record.patientStatus === filterValue
-                )
-            })
+    // const foundedPatient = medicalRecords?.find((record) => {
+    //     return (
+    //         record.PatientId === patient.id && record.patientStatus === filterValue
+    //     )
+    // })
 
-            // console.log(foundedPatient); // checking if we get this info 
+    // console.log(foundedPatient); // checking if we get this info 
 
-            // 8) foundedPatients hadii uu truthy value uu ku jiro means wax aan ahayn falsy value 
-            // waxa laga soo qaadanayaa id-ga keliya asigo id-gaas loo fiirinaayo patient-ka hada la maraayo inuu isku id-yihiin 
-            // hadey taasi sax noqoto ayaa la return gareynaa 
-            
-            return (
-                patient.id === foundedPatient?.PatientId
-            )
-        })
+    // 8) foundedPatients hadii uu truthy value uu ku jiro means wax aan ahayn falsy value 
+    // waxa laga soo qaadanayaa id-ga keliya asigo id-gaas loo fiirinaayo patient-ka hada la maraayo inuu isku id-yihiin 
+    // hadey taasi sax noqoto ayaa la return gareynaa 
 
-        // console.log(filterdPatients); // checking if we get successfully Array 
+    //     return (
+    //         patient.id === foundedPatient?.PatientId
+    //     )
+    // })
 
-    }
+    // console.log(filterdPatients); // checking if we get successfully Array 
 
-    const searchingPatients = searchedPatient ? filterdPatients?.filter(patient => patient.firstName.includes(searchedPatient) ) : filterdPatients
+    // }
+
+    const searchingPatients = searchedPatient ? patientsInfo?.filter(patient => patient.firstName.includes(searchedPatient)) : patientsInfo
 
 
 
@@ -168,7 +185,7 @@ const SumarryPatientDetail = () => {
                 {/* Summary Patient Detail */}
                 {/* the summary patient detail container */}
                 <div className='flex w-[61.5rem] flex-wrap h-auto p-1 gap-2'>
-                    {searchingPatients?.map((patient, key) => {
+                    {patientsInfo?.map((patient, key) => {
                         return (
 
                             <NavLink key={patient.id} to={`${patient.id}/overview`}>

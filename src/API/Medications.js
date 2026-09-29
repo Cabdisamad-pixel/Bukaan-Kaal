@@ -69,3 +69,18 @@ export const UpdateMedicine = async (values) => {
 
     return data
 }
+
+export const DeleteMedicine = async (medicineId) => {
+
+    const { data, error } = await supabase
+        .from('Medications')
+        .delete()
+        .eq('id', medicineId)
+
+    if (error) {
+        console.error('Error deleting medicine:', error);
+        throw error;
+    }
+
+    return data;
+}

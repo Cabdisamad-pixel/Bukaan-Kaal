@@ -5,20 +5,22 @@ import React, { useState } from 'react'
 import { LuPill } from "react-icons/lu";
 import { LuClock } from "react-icons/lu";
 import { LuTriangleAlert } from "react-icons/lu";
-import { FiEdit, FiTrash, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useParams } from 'react-router';
 import LoadingSpinner from '../../../../UI/LoadingSpinner';
 import AddMedication from './AddMedication';
-import { GetMedications, takedWeek, UpdateMedicine } from '../../../../API/Medications';
+import { GetMedications, takedWeek } from '../../../../API/Medications';
 import { GetCurrentWeekByPatientId } from '../../../../API/medicalRecords';
 import toast from 'react-hot-toast';
 import UpdatingMedicine from './UpdatingMedicine'
+import DeletingMedicine from './DeletingMedicine';
 
 const WeekMedications = () => {
 
   // portals states
   const [showMedicationPortal, setShowMedicationPortal] = useState(false);
   const [showUpdateMedicinePortal, setshowUpdateMedicinePortal] = useState(false)
+  const [showDeletingMedicinePortal, setShowDeletingMedicinePortal] = useState(false);
 
   const { id, weekId } = useParams();
 
@@ -76,8 +78,15 @@ const WeekMedications = () => {
   const handleShowMedication = () => {
     setShowMedicationPortal(prev => !prev);
   }
+
+  // Updating
   const handleShowUpdateMedicine = () => {
     setshowUpdateMedicinePortal(prev => !prev);
+  }
+
+  // Deleting
+  const handleShowDeletingMedicine = () => {
+    setShowDeletingMedicinePortal(prev => !prev);
   }
 
   console.log(setShowMedicationPortal);
@@ -106,9 +115,19 @@ const WeekMedications = () => {
           showMedicationPortal && <AddMedication existingMedications={existingMedications} OnClose={handleShowMedication} />
         }
 
+
+        {/* displaying updating medicine portal  */}
+
         {
-          showUpdateMedicinePortal && <UpdateMedicine OnCloseUpdateMedicinePortal={handleShowUpdateMedicine} id={medicineId}/>
+          showUpdateMedicinePortal && <UpdatingMedicine OnCloseUpdateMedicinePortal={handleShowUpdateMedicine} id={medicineId}/>
         }
+
+        {/* displaying deleting medicine portal  */}
+        {
+          showDeletingMedicinePortal && <DeletingMedicine OnCloseDeletingMedicinePortal={handleShowDeletingMedicine} id={medicineId} OnClose={handleShowDeletingMedicine}/>
+        }
+
+        {/* displaying medications */}
         {
 
 
@@ -162,7 +181,10 @@ const WeekMedications = () => {
                     </div>
 
                     {/* trash container */}
-                    <div className='w-[2.3rem] h-[2rem] flex justify-center items-center cursor-pointer bg-red-100 border border-red-300 rounded-lg'>
+                    <div onClick={() => {
+                      handleMedicineId(medicine.id);
+                      handleShowDeletingMedicine();
+                    }} className='w-[2.3rem] h-[2rem] flex justify-center items-center cursor-pointer bg-red-100 border border-red-300 rounded-lg'>
                       <FiTrash2 className='text-red-500' />
                     </div>
 

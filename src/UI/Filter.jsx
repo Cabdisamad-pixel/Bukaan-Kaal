@@ -5,14 +5,14 @@ const Filter = () => {
 
     const [searchPrams, setSearchPrams] = useSearchParams();
 
-    const activeFilter = searchPrams.get('filter') || 'all'
+    const activeFilter = searchPrams.get('status') || 'all'
 
     // console.log(activeFilter);
     
 
     const handleFilter = (e) => {
 
-        searchPrams.set('filter',e);
+        searchPrams.set('status',e);
         setSearchPrams(searchPrams);
     }
 

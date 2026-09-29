@@ -1,19 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import TableRow from './TableRow';
-import LoadingSpinner from '../../../UI/LoadingSpinner';
+// import LoadingSpinner from '../../../UI/LoadingSpinner';
+import { ClipLoader } from "react-spinners";
 import { GetPatientInfo } from '../../../API/PatientInfo';
-// import { ClipLoader } from 'react-spinners';
+import LoadingSpinner from '../../../UI/LoadingSpinner';
+
 
 const Table = () => {
 
 
-    const { data, isLoading, isError } = useQuery({
+    const { data, isLoading: PatientsTableIsLoading, isError } = useQuery({
         queryKey: ['PatientInfo'],
-        queryFn: GetPatientInfo
+        queryFn: () => GetPatientInfo()
     })
 
     console.log(data);
-
+    console.log(PatientsTableIsLoading);
+    console.log(isError);
 
     // const tableData = [
     //     {
@@ -99,7 +102,7 @@ const Table = () => {
 
     return (
         <div className='w-full h-auto'>
-                {isLoading && <LoadingSpinner />}
+            {/* {isLoading && <LoadingSpinner />} */}
             <table className='w-full flex flex-col gap-1'>
                 {/* table head */}
 
@@ -121,15 +124,22 @@ const Table = () => {
 
                 {/* mapping to the patientsData */}
 
+                {
+                    PatientsTableIsLoading && <LoadingSpinner />
+
+                }
 
                 <tbody className='flex flex-col gap-1'>
-                {data?.map((patient, key) => {
+                    {data?.map((patient) => {
 
-                    return (
+                        console.log(patient);
+                        console.log(data);
 
-                        <TableRow patient={patient} key={key} />
-                    )
-                })}
+                        return (
+
+                            <TableRow patient={patient} key={patient.id} />
+                        )
+                    })}
                 </tbody>
 
             </table>

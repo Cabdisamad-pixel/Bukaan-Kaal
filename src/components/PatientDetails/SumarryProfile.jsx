@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react'
+import React, { useState } from 'react'
 import { FiPhone } from 'react-icons/fi';
 import { selectALlMedicalRecords } from '../../API/medicalRecords';
+import { useParams } from 'react-router';
 
 const SumarryProfile = ({patient}) => {
-
 
 
     const getInitials = (name) => {
